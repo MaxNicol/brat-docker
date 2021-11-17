@@ -28,3 +28,9 @@ BRAT_EMAIL=nicol.maxime@courrier.uqam.ca
 ```
 
 This user will have editor permissions.
+
+Then, to start the container, simply run : 
+
+```bash
+docker-compose up -d
+```
