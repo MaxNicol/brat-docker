@@ -22,9 +22,9 @@ You can then start another brat container as above and you should see the same d
 To run the container you need to specify a username, password and email address for BRAT as environment variables when you start the container. These can included in an .env file like so. 
 
 ```bash
-BRAT_USERNAME=covox_user
-BRAT_PASSWORD=covox_2021
-BRAT_EMAIL=nicol.maxime@courrier.uqam.ca
+BRAT_USERNAME=username
+BRAT_PASSWORD=password
+BRAT_EMAIL=email@email.com
 ```
 
 This user will have editor permissions.
