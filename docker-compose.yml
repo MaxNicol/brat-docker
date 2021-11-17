@@ -5,9 +5,9 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - BRAT_USERNAME=covox_user
-        - BRAT_PASSWORD=brat_covox2021
-        - BRAT_EMAIL=brat@example.com
+        - BRAT_USERNAME=${BRAT_USERNAME}
+        - BRAT_PASSWORD=${BRAT_PASSWORD}
+        - BRAT_EMAIL=${BRAT_EMAIL}
     container_name: brat_covox
     restart: unless-stopped
     ports:
