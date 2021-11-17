@@ -1,6 +1,7 @@
 # start from a base ubuntu image
 FROM ubuntu
 
+# Allow env variables to be used during build
 ARG BRAT_USERNAME
 ARG BRAT_PASSWORD
 ARG BRAT_EMAIL
@@ -33,23 +34,16 @@ RUN ./usr/bin/brat_install_wrapper.sh
 # Make sure apache can access it
 RUN chown -R www-data:www-data /var/www/brat/brat-1.3_Crunchy_Frog/
 
-## create a symlink so users can mount their data volume at /bratdata rather than the full path
-RUN ln -s /var/www/brat/brat-1.3_Crunchy_Frog/data /bratdata
-RUN mkdir /bratcfg
-RUN ln -s /var/www/brat/brat-1.3_Crunchy_Frog/config.py /bratcfg/config.py
-
+# Copy apache config to container
 ADD 000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Enable cgi
 RUN a2enmod cgi
 
-EXPOSE 80
-
-# We can't use apachectl as an entrypoint because it starts apache and then exits, taking your container with it. 
+# We can't use apachectl as an entrypoint because it starts apache and then exits, taking your container with it.
 # Instead, use supervisor to monitor the apache process
 RUN mkdir -p /var/log/supervisor
-
-ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf 
+ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 CMD ["/usr/bin/supervisord"]
 
