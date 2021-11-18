@@ -13,5 +13,5 @@ services:
     ports:
      - "8005:80"
     volumes:
-     - ./data/brat-data:/var/www/brat/brat-1.3_Crunchy_Frog/data
-     - ./data/config.py:/var/www/brat/brat-1.3_Crunchy_Frog/config.py
+     - ./data/brat-data:/var/www/brat/data
+     - ./data/config.py:/var/www/brat/config.py

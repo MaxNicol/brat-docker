@@ -16,23 +16,26 @@ RUN echo $BRAT_EMAIL
 RUN apt-get update
 RUN apt-get install -y curl vim sudo wget rsync
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y apache2
+RUN apt-get install -y git
 RUN apt-get install -y python
 RUN apt-get install -y supervisor
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Set working directory
+WORKDIR /var/www/
+
 # Fetch  brat
-RUN mkdir /var/www/brat
-RUN curl -L https://github.com/nlplab/brat/archive/refs/tags/v1.3_Crunchy_Frog.tar.gz > /var/www/brat/brat-1.3_Crunchy_Frog.tar.gz
-RUN cd /var/www/brat && tar -xvzf brat-1.3_Crunchy_Frog.tar.gz
+RUN git clone https://github.com/nlplab/brat.git
+WORKDIR /var/www/brat
 
 # Install brat
 ADD brat_install_wrapper.sh /usr/bin/brat_install_wrapper.sh
 RUN chmod +x /usr/bin/brat_install_wrapper.sh
-RUN ./usr/bin/brat_install_wrapper.sh
+RUN /usr/bin/brat_install_wrapper.sh
 
 # Make sure apache can access it
-RUN chown -R www-data:www-data /var/www/brat/brat-1.3_Crunchy_Frog/
+RUN chown -R www-data:www-data /var/www/brat/
 
 # Copy apache config to container
 ADD 000-default.conf /etc/apache2/sites-available/000-default.conf
